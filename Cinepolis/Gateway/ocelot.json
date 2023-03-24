@@ -1,0 +1,52 @@
+﻿{
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:55001",
+
+    "ServiceDiscoveryProvider": {
+      "Scheme": "https",
+      "Host": "host.docker.internal",
+      "Port": 8500,
+      "Type": "Consul"
+    }
+
+  },
+
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/gateway/movies",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/Movie",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 55003
+        }
+      ],
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "1s",
+        "PeriodTimespan": 1,
+        "Limit": 1
+      },
+      "DangerousAcceptAnyServerCertificateValidator": true
+
+    },
+
+    {
+      "UpstreamPathTemplate": "/gateway/movies/{Id}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/api/Movie/{Id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internalz",
+          "Port": 55003
+        }
+      ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+
+    }
+  ]
+}

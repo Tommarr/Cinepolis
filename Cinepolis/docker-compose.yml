@@ -1,0 +1,52 @@
+version: '3.4'
+
+services:
+  movieservice:
+    image: ${DOCKER_REGISTRY-}movieservice
+    container_name: service-movie
+    build:
+      context: .
+      dockerfile: MovieService/Dockerfile
+    networks:
+      - common_network
+
+  orderservice:
+    image: ${DOCKER_REGISTRY-}orderservice
+    container_name: service-order
+    build:
+      context: .
+      dockerfile: OrderService/Dockerfile
+    networks:
+      - common_network
+
+  planningservice:
+    image: ${DOCKER_REGISTRY-}planningservice
+    container_name: service-planning
+    build:
+      context: .
+      dockerfile: PlanningService/Dockerfile
+
+  gateway:
+    image: ${DOCKER_REGISTRY-}gateway
+    container_name: 'gateway-ocelot'
+    build:
+      context: .
+      dockerfile: Gateway/Dockerfile
+    networks:
+      - common_network
+
+  messagebroker:
+    image: rabbitmq:3-management-alpine
+    container_name: 'messagebroker-rabbitmq'
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+
+
+
+networks:
+    common_network:
+        driver: bridge
