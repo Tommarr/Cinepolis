@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: './Cinepolis.sln'
+        working-directory: '~/Cinepolis/Cinepolis.sln'
         
     steps:
     - uses: actions/checkout@v3
