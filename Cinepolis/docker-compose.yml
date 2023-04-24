@@ -6,7 +6,7 @@ services:
     container_name: service-movie
     build:
       context: .
-      dockerfile: MovieService/Dockerfile
+      dockerfile: Services/MovieService/Dockerfile
     networks:
       - common_network
 
@@ -15,7 +15,15 @@ services:
     container_name: service-order
     build:
       context: .
-      dockerfile: OrderService/Dockerfile
+      dockerfile: Services/OrderService/Dockerfile
+    networks:
+      - common_network
+
+  paymentservice:
+    image: ${DOCKER_REGISTRY-}paymentservice
+    build:
+      context: .
+      dockerfile: Services/PaymentService/Dockerfile
     networks:
       - common_network
 
@@ -24,16 +32,16 @@ services:
     container_name: service-planning
     build:
       context: .
-      dockerfile: PlanningService/Dockerfile
+      dockerfile: Services/PlanningService/Dockerfile
 
-  gateway:
-    image: ${DOCKER_REGISTRY-}gateway
-    container_name: 'gateway-ocelot'
-    build:
-      context: .
-      dockerfile: Gateway/Dockerfile
-    networks:
-      - common_network
+  #gateway:
+  #  image: ${DOCKER_REGISTRY-}gateway
+  #  container_name: 'gateway-ocelot'
+  #  build:
+  #    context: .
+  #    dockerfile: Gateway/Dockerfile
+  #  networks:
+  #    - common_network
 
   messagebroker:
     image: rabbitmq:3-management-alpine
@@ -47,6 +55,9 @@ services:
 
 
 
+
+
 networks:
     common_network:
         driver: bridge
+
