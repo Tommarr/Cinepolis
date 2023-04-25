@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using PaymentService.Models;
-using PaymentService.Repositories;
-using PaymentService.Services;
+using OrderService.Models;
+using OrderService.Repositories;
+using OrderService.Services;
 
-namespace PaymentService.Controllers
+namespace OrderService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

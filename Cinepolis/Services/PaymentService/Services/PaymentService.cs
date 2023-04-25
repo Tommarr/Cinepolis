@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Connections;
-using PaymentService.Models;
+using OrderService.Models;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
 using Microsoft.Extensions.Logging;
 
-namespace PaymentService.Services
+namespace OrderService.Services
 {
     public class PaymentService : IPaymentService
     {

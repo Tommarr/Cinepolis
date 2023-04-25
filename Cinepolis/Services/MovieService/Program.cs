@@ -1,5 +1,5 @@
-using PaymentService.Repositories;
-using PaymentService.Worker;
+using OrderService.Repositories;
+using OrderService.Worker;
 
 var builder = WebApplication.CreateBuilder(args);
 

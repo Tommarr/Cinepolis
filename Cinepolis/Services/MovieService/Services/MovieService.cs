@@ -1,4 +1,4 @@
-﻿namespace PaymentService.Services
+﻿namespace OrderService.Services
 {
     public class MovieService
     {

@@ -3,7 +3,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 
-namespace PaymentService.Worker
+namespace OrderService.Worker
 {
     public class PaymentConsumer : BackgroundService
     {
