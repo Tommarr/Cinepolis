@@ -1,48 +1,30 @@
 version: '3.4'
 
 services:
-  movieservice:
-    image: ${DOCKER_REGISTRY-}movieservice
-    container_name: service-movie
+#Micro services
+  paymentapi:
+    image: ${DOCKER_REGISTRY-}paymentapi
     build:
       context: .
-      dockerfile: Services/MovieService/Dockerfile
+      dockerfile: Services/Payment/PaymentApi/Dockerfile
+    depends_on: 
+      - messagebroker
+      - db-mssql
     networks:
-      - common_network
+      - application_network
 
-  orderservice:
-    image: ${DOCKER_REGISTRY-}orderservice
-    container_name: service-order
+  orderapi:
+    image: ${DOCKER_REGISTRY-}orderapi
     build:
       context: .
-      dockerfile: Services/OrderService/Dockerfile
+      dockerfile: Services/Order/OrderApi/Dockerfile
+    depends_on: 
+      - messagebroker
+      - db-mssql
     networks:
-      - common_network
+      - application_network
 
-  paymentservice:
-    image: ${DOCKER_REGISTRY-}paymentservice
-    build:
-      context: .
-      dockerfile: Services/PaymentService/Dockerfile
-    networks:
-      - common_network
-
-  planningservice:
-    image: ${DOCKER_REGISTRY-}planningservice
-    container_name: service-planning
-    build:
-      context: .
-      dockerfile: Services/PlanningService/Dockerfile
-
-  #gateway:
-  #  image: ${DOCKER_REGISTRY-}gateway
-  #  container_name: 'gateway-ocelot'
-  #  build:
-  #    context: .
-  #    dockerfile: Gateway/Dockerfile
-  #  networks:
-  #    - common_network
-
+#Message broker
   messagebroker:
     image: rabbitmq:3-management-alpine
     container_name: 'messagebroker-rabbitmq'
@@ -52,12 +34,23 @@ services:
     volumes:
         - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
         - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - application_network
 
-
-
-
+#Databases
+  db-mssql:
+    container_name: orderdb-mssql
+    image: 'mcr.microsoft.com/mssql/server'
+    ports:
+      - 1433:1433
+    volumes:
+      - .\apps\mssql\data:/var/opt/mssql/data
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=mssql1Ipw
+    networks:
+      - application_network
 
 networks:
-    common_network:
+    application_network:
         driver: bridge
-
