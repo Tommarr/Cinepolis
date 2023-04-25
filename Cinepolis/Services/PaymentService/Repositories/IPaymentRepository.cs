@@ -1,6 +1,6 @@
-﻿using PaymentService.Models;
+﻿using OrderService.Models;
 
-namespace PaymentService.Repositories
+namespace OrderService.Repositories
 {
     public interface IPaymentRepository
     {

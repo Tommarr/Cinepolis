@@ -1,4 +1,4 @@
-﻿namespace PaymentService.Models
+﻿namespace OrderService.Models
 {
     public class Payment
     {

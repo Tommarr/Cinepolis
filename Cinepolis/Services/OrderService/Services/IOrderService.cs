@@ -1,6 +1,6 @@
-﻿using PaymentService.Models;
+﻿using OrderService.Models;
 
-namespace PaymentService.Services
+namespace OrderService.Services
 {
     public interface IOrderService
     {

@@ -1,6 +1,6 @@
-using PaymentService.Repositories;
-using PaymentService.Services;
-using PaymentService.Worker;
+using OrderService.Repositories;
+using OrderService.Services;
+using OrderService.Worker;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHostedService<OrderConsumer>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
-builder.Services.AddScoped<IPaymentService, PaymentService.Services.PaymentService>();
+builder.Services.AddScoped<IPaymentService, OrderService.Services.PaymentService>();
 
 
 var app = builder.Build();

@@ -1,7 +1,7 @@
-﻿using PaymentService.Models;
+﻿using OrderService.Models;
 using System.Reflection;
 
-namespace PaymentService.Repositories
+namespace OrderService.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
