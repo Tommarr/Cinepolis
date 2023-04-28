@@ -10,12 +10,12 @@ on:
     branches: [ "main" ]
 
 jobs:
-  movie-service:
+  order-service:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./Cinepolis/MovieService
-    name: Movie service build
+        working-directory: ./Cinepolis/Services/Order/OrderApi
+    name: Order service build
     steps:
       - uses: actions/checkout@v2
       - name: Setup dotnet
