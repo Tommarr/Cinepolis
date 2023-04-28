@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PaymentApi.Models;
-using OrderDomain.Models;
-using OrderDomain.Services;
+using OrderApi.Services;
+using PaymentDomain.Models;
 
 namespace PaymentApi.Controllers
 {
@@ -20,15 +19,17 @@ namespace PaymentApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            string a = "dsfsdfdsf";
+            List<Payment> orders = _service.GetAllPayments().ToList();
 
-            return Ok();
+            return Ok(orders);
         }
 
         [HttpPost]
         public async Task<IActionResult> Post(PaymentDto paymentDto)
         {
-            Payment payment = new(paymentDto.OrderId, paymentDto.PaymentMethod, paymentDto.Amount);
+            Payment payment = _service.CreatePayment(new(paymentDto.OrderId, paymentDto.PaymentMethod, paymentDto.Amount));
+            
+
             _service.PublishPayment(payment);
 
             return Ok(payment);

@@ -1,7 +1,7 @@
 version: '3.4'
 
 services:
-#Micro services
+#Microservices
   paymentapi:
     image: ${DOCKER_REGISTRY-}paymentapi
     build:
@@ -11,7 +11,7 @@ services:
       - messagebroker
       - db-mssql
     networks:
-      - application_network
+      - mynetwork
 
   orderapi:
     image: ${DOCKER_REGISTRY-}orderapi
@@ -22,7 +22,7 @@ services:
       - messagebroker
       - db-mssql
     networks:
-      - application_network
+      - mynetwork
 
 #Message broker
   messagebroker:
@@ -35,12 +35,12 @@ services:
         - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
         - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
-      - application_network
+      - mynetwork
 
 #Databases
   db-mssql:
     container_name: orderdb-mssql
-    image: 'mcr.microsoft.com/mssql/server'
+    image: 'mcr.microsoft.com/mssql/server:2022-latest'
     ports:
       - 1433:1433
     volumes:
@@ -49,8 +49,26 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=mssql1Ipw
     networks:
-      - application_network
+      - mynetwork
+
+  #db-postgres:
+  #  image: postgres:latest
+  #  ports:
+  #    - "5432:5432"
+  #  restart: always
+  #  volumes:
+  #    - db_volume:/var/lib/postgresql/data
+  #  environment:
+  #    POSTGRES_USER: "orderuser"
+  #    POSTGRES_PASSWORD: "orderuser"
+  #    POSTGRES_DB: "orderdb"
+  #  networks:
+  #    - mynetwork
 
 networks:
-    application_network:
-        driver: bridge
+  mynetwork:
+    driver: bridge
+
+
+volumes:
+  db_volume:

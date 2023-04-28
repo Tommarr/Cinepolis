@@ -1,21 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OrderDomain.Models
+namespace PaymentDomain.Models
 {
     public class Payment
     {
-        public int Id { get; set; }
-        public int OrderId { get; set; }
-        public string PaymentMethod { get; set; }
+        public string Id { get; set; }
+        public string OrderId { get; set; }
+        public string? PaymentMethod { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Amount { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public Payment(int orderId, string paymentMethod, decimal amount)
+        public Payment()
         {
+            Id = UniqueId.CreateUniqueId();
+            OrderId = UniqueId.CreateUniqueId();
+            PaymentMethod = null;
+            Amount = 0;
+            CreatedAt = DateTime.UtcNow;
+        }
+
+        public Payment(string orderId, string paymentMethod, decimal amount)
+        {
+            Id = UniqueId.CreateUniqueId();
             OrderId = orderId;
             PaymentMethod = paymentMethod;
             Amount = amount;

@@ -22,9 +22,9 @@ namespace PaymentApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            string a = "dsfsdfdsf";
+            List<Order> orders = _service.GetAllOrders().ToList();
 
-            return Ok();
+            return Ok(orders);
         }
 
         [HttpPost]

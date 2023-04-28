@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+using OrderApi.Context;
+using OrderApi.Repositories;
 using OrderDomain.Worker;
-using OrderDomain.Context;
 using OrderDomain.Repositories;
 using OrderDomain.Services;
 
@@ -20,6 +19,7 @@ builder.Services.AddHostedService<PaymentConsumer>();
 
 string connectionString = builder.Configuration.GetConnectionString("OrderDB");
 builder.Services.AddDbContext<OrderContext>(options => options.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<OrderContext>(options => options.UseNpgsql(connectionString));
 
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();

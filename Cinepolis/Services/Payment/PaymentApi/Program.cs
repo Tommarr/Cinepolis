@@ -1,4 +1,9 @@
-using OrderDomain.Services;
+using Microsoft.EntityFrameworkCore;
+using OrderApi.Repositories;
+using OrderApi.Services;
+using PaymentApi.Context;
+using PaymentDomain.Repositories;
+using PaymentApi.Worker;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +14,19 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
+
+string connectionString = builder.Configuration.GetConnectionString("PaymentDB");
+builder.Services.AddDbContext<PaymentContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
+
 builder.Services.AddScoped<IPaymentService , PaymentService>();
+builder.Services.AddScoped<IPaymentRepository , PaymentRepository>();
+
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderRepository , OrderRepository>();
+
+builder.Services.AddHostedService<OrderConsumer>();
 
 var app = builder.Build();
 

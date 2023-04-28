@@ -1,22 +1,34 @@
 ﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using OrderDomain.Models;
+using PaymentDomain.Models;
+using PaymentDomain.Repositories;
 using RabbitMQ.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace OrderDomain.Services
+namespace OrderApi.Services
 {
     public class PaymentService : IPaymentService
     {
+        private readonly IPaymentRepository _repository;
+
         private readonly ILogger<PaymentService> _logger;
 
-        public PaymentService(ILogger<PaymentService> logger)
+        public PaymentService(ILogger<PaymentService> logger, IPaymentRepository repository)
         {
             _logger = logger;
+            _repository = repository;
+        }
+
+        public Payment CreatePayment(Payment payment)
+        {
+            Payment createdPayment = _repository.Add(payment);
+            return createdPayment;
+        }
+
+        public IEnumerable<Payment> GetAllPayments()
+        {
+            IEnumerable<Payment> payments = _repository.GetAll();
+            return payments;
         }
 
         public Payment PublishPayment(Payment payment)

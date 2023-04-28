@@ -7,14 +7,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{34
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{AFE33502-5EC6-40C4-90C5-5F30F57FDBA9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderMS", "OrderMS", "{F346F27B-45C7-499C-B95A-4048A0C5CD05}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Order", "Order", "{F346F27B-45C7-499C-B95A-4048A0C5CD05}"
 	ProjectSection(SolutionItems) = preProject
 		Commands.txt = Commands.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderApi", "Services\Order\OrderApi\OrderApi.csproj", "{10E7D9BD-1205-44BA-9561-9321ADB1D405}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PaymentMS", "PaymentMS", "{A80E73FF-0DDC-4ED0-A32D-4452728824F3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Payment", "Payment", "{A80E73FF-0DDC-4ED0-A32D-4452728824F3}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentApi", "Services\Payment\PaymentApi\PaymentApi.csproj", "{7DF857D5-ABEF-4D78-B462-20D09F9FCBE1}"
 EndProject

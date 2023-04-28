@@ -1,9 +1,11 @@
-﻿using OrderDomain.Models;
+﻿using PaymentDomain.Models;
 
-namespace OrderDomain.Services
+namespace OrderApi.Services
 {
     public interface IPaymentService
     {
         Payment PublishPayment(Payment payment);
+        Payment CreatePayment(Payment order);
+        IEnumerable<Payment> GetAllPayments();
     }
 }

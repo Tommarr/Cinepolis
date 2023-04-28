@@ -1,18 +1,17 @@
-﻿using OrderDomain.Models;
-using OrderApi.Context;
+﻿using PaymentApi.Context;
 using System.Linq.Expressions;
-using Microsoft.Extensions.Logging;
-using OrderDomain.Repositories;
+using PaymentDomain.Repositories;
+using PaymentDomain.Models;
 
 namespace OrderApi.Repositories
 {
     public class OrderRepository : IOrderRepository
     {
-        private readonly OrderContext _Context;
+        private readonly PaymentContext _Context;
         private readonly ILogger<OrderRepository> _logger;
         public IQueryable<Order> Entities => _Context.Set<Order>();
 
-        public OrderRepository(ILogger<OrderRepository> logger, OrderContext orderContext)
+        public OrderRepository(ILogger<OrderRepository> logger, PaymentContext orderContext)
         {
             _logger = logger;
             _Context = orderContext;
