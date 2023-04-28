@@ -3,20 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using OrderDomain.Context;
+using OrderApi.Context;
 
 #nullable disable
 
-namespace OrderInfrastructure.Migrations
+namespace OrderApi.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20230425131245_InitialCreate")]
-    partial class InitialCreate
+    partial class OrderContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,25 +24,33 @@ namespace OrderInfrastructure.Migrations
 
             modelBuilder.Entity("OrderDomain.Models.Order", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CustomerName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "_6dcd9756-6568-4d23-8d03-12013b34ca27-1394ACB3D54D7D1528983FED925EC9AC",
+                            CreatedAt = new DateTime(2023, 4, 28, 18, 9, 4, 880, DateTimeKind.Local).AddTicks(5443)
+                        },
+                        new
+                        {
+                            Id = "_6dcd9756-6568-4d23-8d03-12013b34ca27-727879562184A82CAC08A403F1F78D31",
+                            CreatedAt = new DateTime(2023, 4, 28, 18, 9, 4, 880, DateTimeKind.Local).AddTicks(5500)
+                        });
                 });
 #pragma warning restore 612, 618
         }

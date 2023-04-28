@@ -1,11 +1,9 @@
 ﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using OrderDomain.Models;
 using OrderDomain.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using RabbitMQ.Client;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace OrderDomain.Services
 {
@@ -24,7 +22,43 @@ namespace OrderDomain.Services
         public Order CreateOrder(Order order)
         {
             Order createdOrder = _repository.Add(order);
+            PublishOrder(createdOrder);
             return createdOrder;
+        }
+
+        public IEnumerable<Order> GetAllOrders()
+        {
+            IEnumerable<Order> orders = _repository.GetAll();
+            return orders;
+        }
+
+        public Order PublishOrder(Order order)
+        {
+            ConnectionFactory factory = new();
+            factory.Uri = new Uri("amqp://guest:guest@host.docker.internal:5672");
+            factory.ClientProvidedName = "OrderService";
+
+            IConnection cnn = factory.CreateConnection();
+
+            IModel channel = cnn.CreateModel();
+
+            string exchangeName = "Cinepolis";
+            string routingKey = "order-routing-key";
+            string queueName = "OrderQueue";
+
+            channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
+            channel.QueueDeclare(queueName, true, false, false, null);
+            channel.QueueBind(queueName, exchangeName, routingKey, null);
+
+            var json = JsonConvert.SerializeObject(order);
+            var body = Encoding.UTF8.GetBytes(json);
+            channel.BasicPublish(exchangeName, routingKey, null, body);
+            _logger.LogInformation($"Message published to {queueName}");
+
+            channel.Close();
+            cnn.Close();
+
+            return order;
         }
     }
 }
