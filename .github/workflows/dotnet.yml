@@ -24,6 +24,21 @@ jobs:
           dotnet-version: '6.0' # Check for latest at link at .NET 5 download page
       - run: dotnet build
       - run: dotnet test
+
+  payment-service:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./Cinepolis/Services/Payment/PaymentApi
+    name: Payment service build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0' # Check for latest at link at .NET 5 download page
+      - run: dotnet build
+      - run: dotnet test
       
   sonarcloud:
     name: Sonar build and analyze
