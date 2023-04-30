@@ -1,0 +1,7 @@
+docker-compose up -d influxdb grafana
+docker-compose run k6 run /scripts/OrderApi.js
+
+--insecure-skip-tls-verify
+
+docker network ls
+dockercompose4370592480491255611_mynetwork
