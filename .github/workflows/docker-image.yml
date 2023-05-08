@@ -11,8 +11,10 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    defaults:
+      run:
+        working-directory: ./Cinepolis/Services/Order/OrderApi
     steps:
     - uses: actions/checkout@v3
     - name: Build the order api Docker image
-      run: docker build . --file ../../Cinepolis/Services/Order/Dockerfile --tag orderapi:$(date +%s)
+      run: docker build . --file Dockerfile --tag orderapi:$(date +%s)
