@@ -15,4 +15,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the order api Docker image
-      run: docker build . --file ../../Services/Order/Dockerfile --tag orderapi:$(date +%s)
+      run: docker build . --file ../../Cinepolis/Services/Order/Dockerfile --tag orderapi:$(date +%s)
