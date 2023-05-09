@@ -39,38 +39,45 @@ namespace OrderDomain.Worker
 
         private void DoWork()
         {
-            ConnectionFactory factory = new();
-            factory.Uri = new Uri("amqp://guest:guest@host.docker.internal:5672");
-            factory.ClientProvidedName = "OrderService";
-
-            IConnection cnn = factory.CreateConnection();
-
-            IModel channel = cnn.CreateModel();
-
-            string exchangeName = "Cinepolis";
-            string routingKey = "payment-routing-key";
-            string queueName = "PaymentQueue";
-
-            channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
-            channel.QueueDeclare(queueName, true, false, false, null);
-            channel.QueueBind(queueName, exchangeName, routingKey, null);
-
-            channel.BasicQos(0, 1, false);
-
-            var consumer = new EventingBasicConsumer(channel);
-            consumer.Received += (sender, args) =>
+            try
             {
-                Task.Delay(TimeSpan.FromSeconds(5)).Wait();
-                var body = args.Body.ToArray();
+                ConnectionFactory factory = new();
+                factory.Uri = new Uri("amqp://guest:guest@host.docker.internal:5672");
+                factory.ClientProvidedName = "OrderService";
 
-                string message = Encoding.UTF8.GetString(body);
+                IConnection cnn = factory.CreateConnection();
 
-                _logger.LogInformation($"Message Received: {message}");
+                IModel channel = cnn.CreateModel();
 
-                channel.BasicAck(args.DeliveryTag, false);
-            };
+                string exchangeName = "Cinepolis";
+                string routingKey = "payment-routing-key";
+                string queueName = "PaymentQueue";
 
-            string consumerTag = channel.BasicConsume(queueName, false, consumer);
+                channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
+                channel.QueueDeclare(queueName, true, false, false, null);
+                channel.QueueBind(queueName, exchangeName, routingKey, null);
+
+                channel.BasicQos(0, 1, false);
+
+                var consumer = new EventingBasicConsumer(channel);
+                consumer.Received += (sender, args) =>
+                {
+                    Task.Delay(TimeSpan.FromSeconds(5)).Wait();
+                    var body = args.Body.ToArray();
+
+                    string message = Encoding.UTF8.GetString(body);
+
+                    _logger.LogInformation($"Message Received: {message}");
+
+                    channel.BasicAck(args.DeliveryTag, false);
+                };
+
+                string consumerTag = channel.BasicConsume(queueName, false, consumer);
+            } catch(Exception ex)
+            {
+                _logger.LogInformation(ex.ToString());
+            }
+            
 
             //channel.BasicCancel(consumerTag);
 

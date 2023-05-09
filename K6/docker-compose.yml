@@ -3,7 +3,7 @@ version: '3.4'
 networks:
   k6:
   grafana:
-  dockercompose4370592480491255611_mynetwork:
+  cinepolis_mynetwork:
     external: true
 
 services:
@@ -14,7 +14,7 @@ services:
     networks:
       - k6
       - grafana
-      - dockercompose4370592480491255611_mynetwork
+      - cinepolis_mynetwork
     ports:
       - "8086:8086"
     environment:
@@ -26,7 +26,7 @@ services:
 #    user: root
     networks:
       - grafana
-      - dockercompose4370592480491255611_mynetwork
+      - cinepolis_mynetwork
     ports:
       - "3000:3000"
     environment:
@@ -45,7 +45,7 @@ services:
 #    user: root
     networks:
       - k6
-      - dockercompose4370592480491255611_mynetwork
+      - cinepolis_mynetwork
     ports:
       - "6565:6565"
     environment:

@@ -30,6 +30,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentDomain", "Services\P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderInfrastructure", "Services\Order\OrderInfrastructure\OrderInfrastructure.csproj", "{0A34504D-6235-47E5-BD0A-8926E0FBB730}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", "{CCE23DBB-345D-475B-9671-BA0CDC48B35E}"
+	ProjectSection(SolutionItems) = preProject
+		Kubernetes\orderPod.yaml = Kubernetes\orderPod.yaml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

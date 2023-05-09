@@ -10,7 +10,7 @@ namespace OrderDomain.Repositories
         Order Add(Order entity);
         IEnumerable<Order> Find(Expression<Func<Order, bool>> query);
         Order Get(string id);
-        IEnumerable<Order> GetAll();
+        Task<IEnumerable<Order>> GetAll();
         void Remove(Order entity);
         void Update(Order entity);
     }

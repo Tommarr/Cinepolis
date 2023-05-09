@@ -3,6 +3,7 @@ using OrderApi.Context;
 using System.Linq.Expressions;
 using Microsoft.Extensions.Logging;
 using OrderDomain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace OrderApi.Repositories
 {
@@ -35,9 +36,10 @@ namespace OrderApi.Repositories
             return _Context.Set<Order>().Find(id);
         }
 
-        public IEnumerable<Order> GetAll()
+        public async Task<IEnumerable<Order>> GetAll()
         {
-            return _Context.Set<Order>();
+            var orders = await _Context.Set<Order>().ToListAsync();
+            return orders;
         }
 
         public void Remove(Order entity)

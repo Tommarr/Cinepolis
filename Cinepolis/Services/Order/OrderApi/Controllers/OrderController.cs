@@ -22,7 +22,8 @@ namespace PaymentApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            List<Order> orders = _service.GetAllOrders().ToList();
+            var orders = await _service.GetAllOrders();
+            List<Order> ordersList = orders.ToList();
 
             return Ok(orders);
         }

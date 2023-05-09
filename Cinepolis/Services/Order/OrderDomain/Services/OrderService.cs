@@ -26,9 +26,9 @@ namespace OrderDomain.Services
             return createdOrder;
         }
 
-        public IEnumerable<Order> GetAllOrders()
+        public async Task<IEnumerable<Order>> GetAllOrders()
         {
-            IEnumerable<Order> orders = _repository.GetAll();
+            var orders = await _repository.GetAll();
             return orders;
         }
 
