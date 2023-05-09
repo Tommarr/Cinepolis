@@ -51,19 +51,27 @@ services:
     networks:
       - mynetwork
 
-  #db-postgres:
-  #  image: postgres:latest
-  #  ports:
-  #    - "5432:5432"
-  #  restart: always
-  #  volumes:
-  #    - db_volume:/var/lib/postgresql/data
-  #  environment:
-  #    POSTGRES_USER: "orderuser"
-  #    POSTGRES_PASSWORD: "orderuser"
-  #    POSTGRES_DB: "orderdb"
-  #  networks:
-  #    - mynetwork
+#monitoring
+  prometheus:
+    image: prom/prometheus
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - mynetwork
+
+  grafana: 
+    image: grafana/grafana
+    #command:
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=P@ssw0rd
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - mynetwork
 
 
 networks:

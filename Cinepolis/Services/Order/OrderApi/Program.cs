@@ -4,6 +4,8 @@ using OrderApi.Repositories;
 using OrderDomain.Worker;
 using OrderDomain.Repositories;
 using OrderDomain.Services;
+using Microsoft.Identity.Client;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddHostedService<PaymentConsumer>();
+builder.Services.AddHealthChecks();
 
 
 string connectionString = builder.Configuration.GetConnectionString("OrderDB");
@@ -39,6 +42,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.UseMetricServer();
+app.UseHealthChecks("/health");
 
 app.UseHttpsRedirection();
 

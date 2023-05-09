@@ -4,6 +4,7 @@ using OrderApi.Services;
 using PaymentApi.Context;
 using PaymentDomain.Repositories;
 using PaymentApi.Worker;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
+builder.Services.AddHealthChecks();
 
 
 string connectionString = builder.Configuration.GetConnectionString("PaymentDB");
@@ -38,6 +39,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseMetricServer();
+app.UseHealthChecks("/health");
 
 app.UseAuthorization();
 
