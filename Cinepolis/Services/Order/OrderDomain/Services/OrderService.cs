@@ -35,7 +35,7 @@ namespace OrderDomain.Services
         public Order PublishOrder(Order order)
         {
             ConnectionFactory factory = new();
-            factory.Uri = new Uri("amqp://guest:guest@host.docker.internal:5672");
+            factory.Uri = new Uri("amqp://xgjivpda:oV4Cr6xUh1ORfcklh1mcoKoRWgA8WBaJ@rattlesnake.rmq.cloudamqp.com/xgjivpda");
             factory.ClientProvidedName = "OrderService";
 
             IConnection cnn = factory.CreateConnection();

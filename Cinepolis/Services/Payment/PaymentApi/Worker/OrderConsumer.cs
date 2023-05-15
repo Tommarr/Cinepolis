@@ -19,8 +19,23 @@ namespace PaymentApi.Worker
 
         public readonly IServiceScopeFactory _serviceScopeFactory;
 
+        private string exchangeName;
+        private string routingKey;
+        private string queueName;
+        private IModel channel;
+
         public OrderConsumer(ILogger<OrderConsumer> logger, IServiceScopeFactory serviceScopeFactory)
         {
+            ConnectionFactory factory = new();
+            factory.Uri = new Uri("amqp://xgjivpda:oV4Cr6xUh1ORfcklh1mcoKoRWgA8WBaJ@rattlesnake.rmq.cloudamqp.com/xgjivpda");
+            factory.ClientProvidedName = "OrderService";
+
+            IConnection cnn = factory.CreateConnection();
+            channel = cnn.CreateModel();
+            exchangeName = "Cinepolis";
+            routingKey = "order-routing-key";
+            queueName = "OrderQueue";
+
             _logger = logger;
             _serviceScopeFactory = serviceScopeFactory;
         }
@@ -53,17 +68,17 @@ namespace PaymentApi.Worker
             {
                 IOrderService orderService = scope.ServiceProvider.GetService<IOrderService>();
 
-                ConnectionFactory factory = new();
-                factory.Uri = new Uri("amqp://guest:guest@host.docker.internal:5672");
-                factory.ClientProvidedName = "PaymentService";
+                //ConnectionFactory factory = new();
+                //factory.Uri = new Uri("amqps://xgjivpda:oV4Cr6xUh1ORfcklh1mcoKoRWgA8WBaJ@rattlesnake.rmq.cloudamqp.com/xgjivpda");
+                //factory.ClientProvidedName = "PaymentService";
 
-                IConnection cnn = factory.CreateConnection();
+                //IConnection cnn = factory.CreateConnection();
 
-                IModel channel = cnn.CreateModel();
+                //IModel channel = cnn.CreateModel();
 
-                string exchangeName = "Cinepolis";
-                string routingKey = "order-routing-key";
-                string queueName = "OrderQueue";
+                //string exchangeName = "Cinepolis";
+                //string routingKey = "order-routing-key";
+                //string queueName = "OrderQueue";
 
                 channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
                 channel.QueueDeclare(queueName, true, false, false, null);

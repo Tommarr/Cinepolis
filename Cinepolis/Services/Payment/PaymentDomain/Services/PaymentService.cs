@@ -34,7 +34,7 @@ namespace OrderApi.Services
         public Payment PublishPayment(Payment payment)
         {
             ConnectionFactory factory = new();
-            factory.Uri = new Uri("amqp://guest:guest@host.docker.internal:5672");
+            factory.Uri = new Uri("amqp://xgjivpda:oV4Cr6xUh1ORfcklh1mcoKoRWgA8WBaJ@rattlesnake.rmq.cloudamqp.com/xgjivpda");
             factory.ClientProvidedName = "PaymentService";
 
             IConnection cnn = factory.CreateConnection();

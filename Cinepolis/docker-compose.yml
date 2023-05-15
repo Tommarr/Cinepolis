@@ -10,8 +10,8 @@ services:
     depends_on: 
       - messagebroker
       - db-mssql
-    networks:
-      - mynetwork
+    #networks:
+    #  - mynetwork
 
   orderapi:
     image: ${DOCKER_REGISTRY-}orderapi
@@ -21,8 +21,12 @@ services:
     depends_on: 
       - messagebroker
       - db-mssql
-    networks:
-      - mynetwork
+    environment:
+      - CONNECTIONSTRINGS__OrderDB=Data Source=host.docker.internal,1433;Database=OrderDB;User ID=sa;Password=mssql1Ipw; TrustServerCertificate=True
+
+      #- CONNECTIONSTRINGS__OrderDB=Server=db-mssql,1433;Database=OrderDB;User ID=sa;Password=mssql1Ipw; TrustServerCertificate=True
+    #networks:
+    #  - mynetwork
 
 #Message broker
   messagebroker:
@@ -34,8 +38,8 @@ services:
     volumes:
         - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
         - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
-    networks:
-      - mynetwork
+    #networks:
+    #  - mynetwork
 
 #Databases
   db-mssql:
@@ -43,40 +47,38 @@ services:
     image: 'mcr.microsoft.com/mssql/server:2022-latest'
     ports:
       - 1433:1433
-    volumes:
-      - .\apps\mssql\data:/var/opt/mssql/data
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=mssql1Ipw
-    networks:
-      - mynetwork
+    #networks:
+    #  - mynetwork
 
 #monitoring
-  prometheus:
-    image: prom/prometheus
-    restart: always
-    ports:
-      - 9090:9090
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    networks:
-      - mynetwork
+#  prometheus:
+#    image: prom/prometheus
+#    restart: always
+#    ports:
+#      - 9090:9090
+#    volumes:
+#      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+#    networks:
+#      - mynetwork
 
-  grafana: 
-    image: grafana/grafana
-    #command:
-    environment:
-      - GF_SECURITY_ADMIN_PASSWORD=P@ssw0rd
-    restart: always
-    ports:
-      - 3000:3000
-    networks:
-      - mynetwork
+#  grafana: 
+#    image: grafana/grafana
+#    command:
+#    environment:
+#      - GF_SECURITY_ADMIN_PASSWORD=P@ssw0rd
+#    restart: always
+#    ports:
+#      - 3000:3000
+#    networks:
+#      - mynetwork
 
 
-networks:
-  mynetwork:
-    driver: bridge
+#networks:
+#  mynetwork:
+#    driver: bridge
 
 
 volumes:

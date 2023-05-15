@@ -10,8 +10,23 @@ namespace OrderDomain.Worker
     {
         private readonly ILogger<PaymentConsumer> _logger;
 
+        private string exchangeName;
+        private string routingKey;
+        private string queueName;
+        private IModel channel;
+
         public PaymentConsumer(ILogger<PaymentConsumer> logger)
         {
+            ConnectionFactory factory = new();
+            factory.Uri = new Uri("amqp://xgjivpda:oV4Cr6xUh1ORfcklh1mcoKoRWgA8WBaJ@rattlesnake.rmq.cloudamqp.com/xgjivpda");
+            factory.ClientProvidedName = "OrderService";
+
+            IConnection cnn = factory.CreateConnection();
+            channel = cnn.CreateModel();
+
+            exchangeName = "Cinepolis";
+            routingKey = "payment-routing-key";
+            queueName = "PaymentQueue";
             _logger = logger;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -41,17 +56,17 @@ namespace OrderDomain.Worker
         {
             try
             {
-                ConnectionFactory factory = new();
-                factory.Uri = new Uri("amqp://guest:guest@host.docker.internal:5672");
-                factory.ClientProvidedName = "OrderService";
+                //ConnectionFactory factory = new();
+                //factory.Uri = new Uri("amqp://xgjivpda:oV4Cr6xUh1ORfcklh1mcoKoRWgA8WBaJ@rattlesnake.rmq.cloudamqp.com/xgjivpda");
+                //factory.ClientProvidedName = "OrderService";
 
-                IConnection cnn = factory.CreateConnection();
+                //IConnection cnn = factory.CreateConnection();
 
-                IModel channel = cnn.CreateModel();
+                //IModel channel = cnn.CreateModel();
 
-                string exchangeName = "Cinepolis";
-                string routingKey = "payment-routing-key";
-                string queueName = "PaymentQueue";
+                //string exchangeName = "Cinepolis";
+                //string routingKey = "payment-routing-key";
+                //string queueName = "PaymentQueue";
 
                 channel.ExchangeDeclare(exchangeName, ExchangeType.Direct);
                 channel.QueueDeclare(queueName, true, false, false, null);

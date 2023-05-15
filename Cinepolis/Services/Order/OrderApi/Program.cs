@@ -36,6 +36,19 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 
 var app = builder.Build();
 
+//using (var scope = app.Services.CreateAsyncScope())
+//{
+//    using (var db = scope.ServiceProvider.GetService<OrderContext>())
+//    {
+//        db.Database.MigrateAsync();
+//    }
+//}
+using var scope = app.Services.CreateAsyncScope();
+using var db = scope.ServiceProvider.GetService<OrderContext>();
+db.Database.MigrateAsync();
+
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
