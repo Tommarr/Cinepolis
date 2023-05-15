@@ -10,6 +10,9 @@ services:
     depends_on: 
       - messagebroker
       - db-mssql
+    environment:
+      - CONNECTIONSTRINGS__PaymentDB=Data Source=host.docker.internal,1433;Database=PaymentDB;User ID=sa;Password=mssql1Ipw; TrustServerCertificate=True
+
     #networks:
     #  - mynetwork
 
@@ -27,6 +30,12 @@ services:
       #- CONNECTIONSTRINGS__OrderDB=Server=db-mssql,1433;Database=OrderDB;User ID=sa;Password=mssql1Ipw; TrustServerCertificate=True
     #networks:
     #  - mynetwork
+
+  movieapi:
+    image: ${DOCKER_REGISTRY-}movieapi
+    build:
+      context: .
+      dockerfile: Services/Movie/MovieApi/Dockerfile
 
 #Message broker
   messagebroker:
@@ -79,6 +88,8 @@ services:
 #networks:
 #  mynetwork:
 #    driver: bridge
+
+
 
 
 volumes:

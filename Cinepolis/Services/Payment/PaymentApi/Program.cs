@@ -17,7 +17,6 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddHealthChecks();
 
-
 string connectionString = builder.Configuration.GetConnectionString("PaymentDB");
 builder.Services.AddDbContext<PaymentContext>(options => options.UseSqlServer(connectionString), ServiceLifetime.Scoped);
 
@@ -30,6 +29,10 @@ builder.Services.AddScoped<IOrderRepository , OrderRepository>();
 builder.Services.AddHostedService<OrderConsumer>();
 
 var app = builder.Build();
+
+using var scope = app.Services.CreateAsyncScope();
+using var db = scope.ServiceProvider.GetService<PaymentContext>();
+db.Database.MigrateAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
