@@ -34,14 +34,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Kubernetes", "Kubernetes", 
 	ProjectSection(SolutionItems) = preProject
 		Kubernetes\mssql-deployment.yml = Kubernetes\mssql-deployment.yml
 		Kubernetes\order-deployment.yml = Kubernetes\order-deployment.yml
-		Kubernetes\orderPod.yaml = Kubernetes\orderPod.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Movie", "Movie", "{CD8A677B-44DF-4995-A076-EEC352C53567}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieApi", "Services\Movie\MovieApi\MovieApi.csproj", "{D174A751-902B-43CD-B6AF-847BF0887434}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieApi", "Services\Movie\MovieApi\MovieApi.csproj", "{D174A751-902B-43CD-B6AF-847BF0887434}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieDomain", "Services\Movie\MovieDomain\MovieDomain.csproj", "{86C867DD-5E95-4108-ACCA-359F4814A17A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieDomain", "Services\Movie\MovieDomain\MovieDomain.csproj", "{86C867DD-5E95-4108-ACCA-359F4814A17A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{90E18198-671D-4561-862B-3747C5580950}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityApi", "Services\Identity\IdentityApi\IdentityApi.csproj", "{7BDA4C44-8C53-4AC3-8405-B8949988F451}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,6 +88,10 @@ Global
 		{86C867DD-5E95-4108-ACCA-359F4814A17A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86C867DD-5E95-4108-ACCA-359F4814A17A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86C867DD-5E95-4108-ACCA-359F4814A17A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BDA4C44-8C53-4AC3-8405-B8949988F451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BDA4C44-8C53-4AC3-8405-B8949988F451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BDA4C44-8C53-4AC3-8405-B8949988F451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BDA4C44-8C53-4AC3-8405-B8949988F451}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +109,8 @@ Global
 		{CD8A677B-44DF-4995-A076-EEC352C53567} = {34ED4C37-A15E-484F-BB86-B3FBBDB8E091}
 		{D174A751-902B-43CD-B6AF-847BF0887434} = {CD8A677B-44DF-4995-A076-EEC352C53567}
 		{86C867DD-5E95-4108-ACCA-359F4814A17A} = {CD8A677B-44DF-4995-A076-EEC352C53567}
+		{90E18198-671D-4561-862B-3747C5580950} = {34ED4C37-A15E-484F-BB86-B3FBBDB8E091}
+		{7BDA4C44-8C53-4AC3-8405-B8949988F451} = {90E18198-671D-4561-862B-3747C5580950}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB9C3C40-BACA-4A40-B5C7-14ECFB3F4482}

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: orderservice
-        image: acrterminal.azurecr.io/orderservice
+        image: acrcinepolis.azurecr.io/orderapi:v1
         ports:
         - containerPort: 80
         - containerPort: 443
@@ -22,15 +22,12 @@ spec:
           - name: ASPNETCORE_URLS
             value: http://*:80
           - name: ConnectionStrings__DefaultConnection
-            value: Server=localhost,1433;Initial Catalog=db;Persist Security Info=False;User ID=sa;Password=S3cur3P@ssW0rd!;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True;Connection Timeout=30;
+            value: Server=tcp:mssql-deployment,1433;Initial Catalog=db;Persist Security Info=False;User ID=sa;Password=mssql1Ipwa;MultipleActiveResultSets=False;Encrypt=False;TrustServerCertificate=True;Connection Timeout=30;
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: orderservice
-
- 
-
 spec:
   type: LoadBalancer
   selector:

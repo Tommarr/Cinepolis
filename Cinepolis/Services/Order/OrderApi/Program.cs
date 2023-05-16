@@ -6,8 +6,32 @@ using OrderDomain.Repositories;
 using OrderDomain.Services;
 using Microsoft.Identity.Client;
 using Prometheus;
+using OrderApi.Startup;
+using Serilog;
+using Serilog.Events;
+using Serilog.Sinks.SystemConsole.Themes;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Protocols;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.Hosting.Lifetime", LogEventLevel.Debug)
+    .MinimumLevel.Override("System", LogEventLevel.Warning)
+    .MinimumLevel.Override("Microsoft.AspNetCore.Authentication", LogEventLevel.Debug)
+    .Enrich.FromLogContext()
+
+
+    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Code)
+    .CreateLogger();
 
 builder.WebHost.UseKestrel(so =>
 {
@@ -26,6 +50,8 @@ builder.Services.AddHostedService<PaymentConsumer>();
 builder.Services.AddHealthChecks();
 
 
+
+
 string connectionString = builder.Configuration.GetConnectionString("OrderDB");
 builder.Services.AddDbContext<OrderContext>(options => options.UseSqlServer(connectionString));
 //builder.Services.AddDbContext<OrderContext>(options => options.UseNpgsql(connectionString));
@@ -33,6 +59,8 @@ builder.Services.AddDbContext<OrderContext>(options => options.UseSqlServer(conn
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 
+builder.Services.ConfigAuthentication();
+builder.Services.ConfigAuthorization();
 
 var app = builder.Build();
 
@@ -60,6 +88,9 @@ app.UseHealthChecks("/health");
 
 app.UseHttpsRedirection();
 
+app.UseAuthorization();
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OrderDomain.Models;
 using OrderDomain.Services;
 using PaymentApi.Models;
+using System.Security.Claims;
 
 namespace PaymentApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class OrderController : ControllerBase
     {
         private readonly ILogger<OrderController> _logger;
@@ -22,6 +25,10 @@ namespace PaymentApi.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
+            //ClaimsIdentity identity = HttpContext.User.Identity as ClaimsIdentity;
+            //if (identity == null || identity.Name == null)
+            //    return Unauthorized();
+
             var orders = await _service.GetAllOrders();
             List<Order> ordersList = orders.ToList();
 

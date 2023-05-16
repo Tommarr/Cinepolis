@@ -27,7 +27,7 @@ spec:
         - name: ACCEPT_EULA
           value: "Y"
         - name: MSSQL_SA_PASSWORD
-          value: mssql1Ipw
+          value: mssql1Ipwa
 ---
 apiVersion: v1
 kind: Service
@@ -40,4 +40,4 @@ spec:
     - protocol: TCP
       port: 1433
       targetPort: 1433
-  type: LoadBalancer
+  type: ClusterIP

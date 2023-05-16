@@ -31,11 +31,20 @@ services:
     #networks:
     #  - mynetwork
 
-  movieapi:
-    image: ${DOCKER_REGISTRY-}movieapi
-    build:
-      context: .
-      dockerfile: Services/Movie/MovieApi/Dockerfile
+  #movieapi:
+  #  image: ${DOCKER_REGISTRY-}movieapi
+  #  build:
+  #    context: .
+  #    dockerfile: Services/Movie/MovieApi/Dockerfile
+
+# Identity
+  #identityapi:
+  #  container_name: 'IdentityApi'
+  #  image: ${DOCKER_REGISTRY-}identityapi
+  #  build:
+  #    context: .
+  #    dockerfile: Services/Identity/IdentityApi/Dockerfile
+
 
 #Message broker
   messagebroker:
@@ -94,3 +103,4 @@ services:
 
 volumes:
   db_volume:
+
