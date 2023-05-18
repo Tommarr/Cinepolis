@@ -37,14 +37,15 @@ services:
   #    context: .
   #    dockerfile: Services/Movie/MovieApi/Dockerfile
 
-# Identity
-  #identityapi:
-  #  container_name: 'IdentityApi'
-  #  image: ${DOCKER_REGISTRY-}identityapi
-  #  build:
-  #    context: .
-  #    dockerfile: Services/Identity/IdentityApi/Dockerfile
-
+ #Identity
+  identityapi:
+    container_name: 'IdentityApi'
+    image: ${DOCKER_REGISTRY-}identityapi
+    build:
+      context: .
+      dockerfile: Services/Identity/IdentityApi/Dockerfile
+    environment:
+      - CONNECTIONSTRINGS__DefaultConnection=Data Source=host.docker.internal,1433;Database=IdentityDB;User ID=sa;Password=mssql1Ipw; TrustServerCertificate=True
 
 #Message broker
   messagebroker:

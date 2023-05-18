@@ -4,7 +4,7 @@ namespace OrderDomain.Services
 {
     public interface IOrderService
     {
-        Order CreateOrder(Order order);
+        Task<Order> CreateOrderAsync(Order order);
         Task<IEnumerable<Order>> GetAllOrders();
     }
 }

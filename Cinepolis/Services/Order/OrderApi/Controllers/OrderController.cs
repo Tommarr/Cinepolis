@@ -38,8 +38,8 @@ namespace PaymentApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(OrderDto orderDto)
         {
-            _service.CreateOrder(new Order(orderDto.CustomerName));
-             return Ok(orderDto);
+            await _service.CreateOrderAsync(new Order(orderDto.CustomerName));
+            return Ok(orderDto);
         }
     }
 }
