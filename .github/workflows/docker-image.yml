@@ -27,6 +27,8 @@ jobs:
       - name: Build & Push
         uses: docker/build-push-action@v2
         with:
+          context: .
+          file: ./Services/Order/OrderApi
           push: true
           build-args: |
             version=${{ steps.tag.outputs.tag }}
