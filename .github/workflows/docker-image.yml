@@ -8,9 +8,12 @@
 # You can also reference a tag or branch, but the action may change without warning.
 
 name: Publish Docker image
+
 on:
-  release:
-    types: [published]
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
   push_to_registry:
