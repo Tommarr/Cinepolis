@@ -28,7 +28,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Cinepolis/Services/Order/OrderApi
+          file: ./Services/Order/OrderApi
           push: true
           build-args: |
             version=${{ steps.tag.outputs.tag }}
