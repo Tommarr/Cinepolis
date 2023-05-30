@@ -10,7 +10,7 @@ WORKDIR /src
 COPY ["Cinepolis/Services/Order/OrderApi/OrderApi.csproj", "Cinepolis/Services/Order/OrderApi/"]
 RUN dotnet restore "Cinepolis/Services/Order/OrderApi/OrderApi.csproj"
 COPY . .
-WORKDIR "/src/Services/Order/OrderApi"
+WORKDIR "/src/Cinepolis/Services/Order/OrderApi"
 RUN dotnet build "OrderApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
