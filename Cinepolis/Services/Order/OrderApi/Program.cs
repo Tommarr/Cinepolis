@@ -1,10 +1,23 @@
-//using OrderApi.Context;
-//using OrderDomain.Worker;
-//using OrderDomain.Repositories;
-//using OrderDomain.Services;
+using Microsoft.EntityFrameworkCore;
+using OrderApi.Context;
+using OrderApi.Repositories;
+using OrderDomain.Worker;
+using OrderDomain.Repositories;
+using OrderDomain.Services;
+using Microsoft.Identity.Client;
+using Prometheus;
+using OrderApi.Startup;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
+
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Protocols;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,12 +33,12 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm:ss} {Level}] {SourceContext}{NewLine}{Message:lj}{NewLine}{Exception}{NewLine}", theme: AnsiConsoleTheme.Code)
     .CreateLogger();
 
-//builder.WebHost.UseKestrel(so =>
-//{
-//    so.Limits.MaxConcurrentConnections = 100000;
-//    so.Limits.MaxConcurrentUpgradedConnections = 100000;
-//    so.Limits.MaxRequestBodySize = 52428800;
-//});
+builder.WebHost.UseKestrel(so =>
+{
+    so.Limits.MaxConcurrentConnections = 100000;
+    so.Limits.MaxConcurrentUpgradedConnections = 100000;
+    so.Limits.MaxRequestBodySize = 52428800;
+});
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -33,22 +46,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//builder.Services.AddHostedService<PaymentConsumer>();
+builder.Services.AddHostedService<PaymentConsumer>();
 builder.Services.AddHealthChecks();
 
 
 
 
-//string connectionString = builder.Configuration.GetConnectionString("OrderDB");
-//builder.Services.AddDbContext<OrderContext>(options => options.UseSqlServer(connectionString));
-
+string connectionString = builder.Configuration.GetConnectionString("OrderDB");
+builder.Services.AddDbContext<OrderContext>(options => options.UseSqlServer(connectionString));
 //builder.Services.AddDbContext<OrderContext>(options => options.UseNpgsql(connectionString));
 
-//builder.Services.AddScoped<IOrderRepository, OrderRepository>();
-//builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
-//builder.Services.ConfigAuthentication();
-//builder.Services.ConfigAuthorization();
+builder.Services.ConfigAuthentication();
+builder.Services.ConfigAuthorization();
 
 var app = builder.Build();
 
@@ -59,9 +71,9 @@ var app = builder.Build();
 //        db.Database.MigrateAsync();
 //    }
 //}
-//using var scope = app.Services.CreateAsyncScope();
-//using var db = scope.ServiceProvider.GetService<OrderContext>();
-//db.Database.MigrateAsync();
+using var scope = app.Services.CreateAsyncScope();
+using var db = scope.ServiceProvider.GetService<OrderContext>();
+db.Database.MigrateAsync();
 
 
 
@@ -71,15 +83,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-//app.UseMetricServer();
+app.UseMetricServer();
 app.UseHealthChecks("/health");
 
 app.UseHttpsRedirection();
 
-//app.UseAuthorization();
+app.UseAuthorization();
 
-//app.UseAuthentication();
-//app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 

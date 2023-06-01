@@ -37,4 +37,12 @@
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.30.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OrderDomain\OrderDomain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
