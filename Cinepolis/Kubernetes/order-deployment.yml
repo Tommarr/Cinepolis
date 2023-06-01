@@ -15,6 +15,7 @@ spec:
       containers:
       - name: orderservice
         image: acrcinepolis.azurecr.io/orderapi:v1
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         - containerPort: 443

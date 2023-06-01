@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OrderDomain.Models;
-using OrderDomain.Services;
+using OrderApi.Models;
 using PaymentApi.Models;
 using System.Security.Claims;
 
@@ -14,12 +13,12 @@ namespace PaymentApi.Controllers
     public class OrderController : ControllerBase
     {
         private readonly ILogger<OrderController> _logger;
-        private readonly IOrderService _service;
+        //private readonly IOrderService _service;
 
-        public OrderController( IOrderService service, ILogger<OrderController> logger)
+        public OrderController(  ILogger<OrderController> logger)
         {
             _logger = logger;
-            _service = service;
+            //_service = service;
         }
 
         [HttpGet]
@@ -29,17 +28,19 @@ namespace PaymentApi.Controllers
             //if (identity == null || identity.Name == null)
             //    return Unauthorized();
 
-            var orders = await _service.GetAllOrders();
-            List<Order> ordersList = orders.ToList();
+            //var orders = await _service.GetAllOrders();
+            //List<Order> ordersList = orders.ToList();
+            List<Order> ordersList = new List<Order> { new Order("john"), new Order("sam"), new Order("francis") };
 
-            return Ok(orders);
+
+            return Ok(ordersList);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(OrderDto orderDto)
-        {
-            await _service.CreateOrderAsync(new Order(orderDto.CustomerName));
-            return Ok(orderDto);
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> Post(OrderDto orderDto)
+        //{
+        //    await _service.CreateOrderAsync(new Order(orderDto.CustomerName));
+        //    return Ok(orderDto);
+        //}
     }
 }
