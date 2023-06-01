@@ -14,7 +14,6 @@ services:
     networks:
       - k6
       - grafana
-      - cinepolis_mynetwork
     ports:
       - "8086:8086"
     environment:
@@ -26,7 +25,6 @@ services:
 #    user: root
     networks:
       - grafana
-      - cinepolis_mynetwork
     ports:
       - "3000:3000"
     environment:
@@ -45,7 +43,6 @@ services:
 #    user: root
     networks:
       - k6
-      - cinepolis_mynetwork
     ports:
       - "6565:6565"
     environment:
