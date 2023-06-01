@@ -31,12 +31,14 @@ services:
     #networks:
     #  - mynetwork
 
+#google cloud bucket
   #movieapi:
   #  image: ${DOCKER_REGISTRY-}movieapi
   #  build:
   #    context: .
   #    dockerfile: Services/Movie/MovieApi/Dockerfile
 
+#auth
  #Identity
   identityapi:
     container_name: 'IdentityApi'
