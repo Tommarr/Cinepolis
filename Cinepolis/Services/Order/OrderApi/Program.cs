@@ -4,20 +4,11 @@ using OrderApi.Repositories;
 using OrderDomain.Worker;
 using OrderDomain.Repositories;
 using OrderDomain.Services;
-using Microsoft.Identity.Client;
 using Prometheus;
 using OrderApi.Startup;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
-
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.IdentityModel.JsonWebTokens;
-using Microsoft.IdentityModel.Logging;
-using Microsoft.IdentityModel.Protocols;
-using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
